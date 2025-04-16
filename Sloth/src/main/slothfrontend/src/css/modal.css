@@ -1,0 +1,9 @@
+/* .modal-text-field-box {
+  display: grid;
+  gap: 10px;
+} */
+
+.modal-text-field {
+  padding-top: 50px;
+  background-color: rgb(243, 242, 242);
+}

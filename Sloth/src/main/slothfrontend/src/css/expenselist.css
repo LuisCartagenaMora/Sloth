@@ -1,0 +1,36 @@
+li {
+  list-style-type: none;
+}
+
+.expense-list-header {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+  gap: 60px;
+  background-color: rgb(98, 0, 238);
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.expense-list {
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.expense-list-stack {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.individual-expense {
+  display: grid;
+  grid-template-columns: 50% 25% 25%;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.individual-expense-chip {
+  margin-left: 5px;
+}
