@@ -15,7 +15,8 @@
     "@material/icon-button": "^14.0.0",
     "@material/top-app-bar": "^14.0.0",
     "@mui/icons-material": "^7.0.1",
-    "@mui/material": "^7.0.1",
+    "@mui/material": "^7.0.2",
+    "@mui/x-charts": "^8.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0"

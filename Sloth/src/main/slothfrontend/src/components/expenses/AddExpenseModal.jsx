@@ -9,6 +9,10 @@ import {
   Backdrop,
   TextField,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import createExpense from "../../js/AddExpenseButton";
 
@@ -76,7 +80,7 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
               className="modal-text-field"
               required
               id="filled-required"
-              label="Enter the expense's date"
+              label="Date"
               variant="filled"
               onChange={(e) => {
                 setDate(e.target.value);
@@ -86,13 +90,48 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
               className="modal-text-field"
               required
               id="filled-required"
-              label="Enter the expense's amount"
+              label="Amount"
               variant="filled"
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
             />
-            <TextField
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Category</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={category}
+                label="Expense Category"
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                <MenuItem value={"Housing"}>Housing</MenuItem>
+                <MenuItem value={"Utilities"}>Utilities</MenuItem>
+                <MenuItem value={"Transportation"}>Transportation</MenuItem>
+                <MenuItem value={"Food & Groceries"}>Food & Groceries</MenuItem>
+                <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
+                <MenuItem value={"Health & Fitness"}>Health & Fitness</MenuItem>
+                <MenuItem value={"Personal Care & Hygeine"}>
+                  Personal Care & Hygeine
+                </MenuItem>
+                <MenuItem value={"Clothing"}>Clothing</MenuItem>
+                <MenuItem value={"Education"}>Education</MenuItem>
+                <MenuItem value={"Childcare & Kids"}>Childcare & Kids</MenuItem>
+                <MenuItem value={"Travel"}>Travel</MenuItem>
+                <MenuItem value={"Gifts"}>Gifts</MenuItem>
+                <MenuItem value={"Saving & Instruments"}>
+                  Saving & Instruments
+                </MenuItem>
+                <MenuItem value={"Insurance"}>Insurance</MenuItem>
+                <MenuItem value={"Debt Repayment"}>Debt Repayment</MenuItem>
+                <MenuItem value={"Pets"}>Pets</MenuItem>
+                <MenuItem value={"Subscriptions"}>Subscriptions</MenuItem>
+                <MenuItem value={"Miscellaneous"}>Miscellaneous</MenuItem>
+              </Select>
+            </FormControl>
+            {/* <TextField
               className="modal-text-field"
               required
               id="filled-required"
@@ -101,13 +140,13 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
               onChange={(e) => {
                 setCategory(e.target.value);
               }}
-            />
+            /> */}
 
             <TextField
               className="modal-text-field"
               required
               id="filled-required"
-              label="Enter the expense's description"
+              label="Description"
               variant="filled"
               onChange={(e) => {
                 setDescription(e.target.value);

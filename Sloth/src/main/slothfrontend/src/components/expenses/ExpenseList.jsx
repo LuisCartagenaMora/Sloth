@@ -12,13 +12,10 @@ import {
   Pagination,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import AddExpenseModal from "./AddExpenseModal";
 import deleteButton from "../../js/DeleteExpenseButton";
 
 export default function ExpenseList({ onStatusChange, userId }) {
-  const queryClient = useQueryClient();
-
   const [expenses, setExpenses] = useState([]);
   const [numberOfPages, setNumberOfPages] = useState("");
   const [pagination, setPagination] = useState({
@@ -79,16 +76,28 @@ export default function ExpenseList({ onStatusChange, userId }) {
     fetchAllExpenses();
   }, [userId]);
 
-  // Mutation to delete an expense
-  const deleteExpenseMutation = useMutation(
-    (expenseId) => deleteButton(expenseId),
-    {
-      onSuccess: () => {
-        // Refetch expenses after a successful delete
-        queryClient.invalidateQueries(["expenses", userId]);
-      },
-    }
-  );
+  // useEffect(() => {
+  //   const deleteCurrentExpense = async (expenseId) => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8081/delete-expense/${expenseId}`,
+  //         {
+  //           method: "DELETE",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to delete current expense.", error);
+  //     }
+  //   };
+
+  //   deleteCurrentExpense();
+  // }, [expenseId]);
 
   const handleAlertStatus = (value) => {
     console.log("Alert status changed:", value);
@@ -187,9 +196,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
                       variant="contained"
                       startIcon={<DeleteIcon />}
                       color="error"
-                      onClick={() =>
-                        deleteExpenseMutation.mutate(expense.expenseId)
-                      }
+                      onClick={() => deleteButton(expense.expenseId)}
                     >
                       <span>Delete</span>
                     </Button>
