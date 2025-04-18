@@ -8,7 +8,8 @@ import Header from "./components/expenses/Header.jsx";
 import App from "./components/expenses/App.jsx";
 import ExpenseList from "./components/expenses/ExpenseList.jsx";
 import ExpenseAlert from "./components/expenses/ExpenseAlert.jsx";
-import ExpenseChart from "./components/expenses/ExpenseChart.jsx";
+import ExpensePieChartPieChart from "./components/expenses/ExpensePieChart.jsx";
+import ExpenseLineChart from "./components/expenses/ExpenseLineChart.jsx";
 
 export default function Expenses() {
   const [alertStatus, setAlertStatus] = React.useState(null);
@@ -29,7 +30,8 @@ export default function Expenses() {
       <App userId={userId} />
       <ExpenseAlert alertStatus={alertStatus} />
       <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
-      <ExpenseChart userId={userId} />
+      <ExpensePieChartPieChart userId={userId} />
+      <ExpenseLineChart userId={userId} />
     </>
   );
 }

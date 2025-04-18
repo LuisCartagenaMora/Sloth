@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { BarChart, PieChart } from "@mui/x-charts";
+import { BarChart, LineChart, PieChart } from "@mui/x-charts";
 
-export default function ExpenseChart({ userId }) {
+export default function ExpensePieChart({ userId }) {
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function ExpenseChart({ userId }) {
   }, [userId]);
 
   const expensesAmount = expenses.map((expense) => {
-    return expense;
+    return expense.amount;
   });
 
   const expensesCategory = expenses.map((expense) => {
@@ -41,32 +41,32 @@ export default function ExpenseChart({ userId }) {
   });
   console.log(expenses);
 
+  //Gets unique list of categories from current list of expenses
   let unique = [...new Set(expensesCategory)];
-  console.log(expensesAmount);
+  console.log(unique);
+
+  let totalAmountPerCategories = [];
+
+  for (let i = 0; i < unique.length; i++) {
+    let sum = 0;
+    console.log("Checking " + unique[i]);
+    for (let j = 0; j < expenses.length; j++) {
+      if (unique[i] === expenses[j].category) {
+        sum += expenses[j].amount;
+        console.log(sum);
+      }
+    }
+    totalAmountPerCategories.push(sum);
+    console.log(totalAmountPerCategories);
+  }
 
   return (
-    // <BarChart
-    //   xAxis={[
-    //     {
-    //       id: "barCategories",
-    //       data: [...expensesCategory],
-    //       scaleType: "band",
-    //     },
-    //   ]}
-    //   series={[
-    //     {
-    //       data: [...expensesAmount],
-    //     },
-    //   ]}
-    //   height={300}
-    // />
-
     <PieChart
       series={[
         {
-          data: expensesCategory.map((category, index) => ({
-            id: unique[index],
-            value: expensesAmount[index],
+          data: unique.map((_, index) => ({
+            id: index,
+            value: totalAmountPerCategories[index],
             label: unique[index],
           })),
         },
