@@ -4,6 +4,7 @@ import com.Sloth.repo.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ExpenseService{
     Expense expense;
 
 
-    //Creates a new Expense object and stores it into the db.
+    // Creates a new Expense object and stores it into the db.
     public void createExpense(Expense newExpense){
         Expense expense = new Expense(newExpense.getUserId(), newExpense.getDate(), newExpense.getAmount(), newExpense.getCategory(), newExpense.getDescription());
         expenseRepository.save(expense);
