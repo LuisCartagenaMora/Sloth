@@ -33,7 +33,7 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/new-user")
+    @PostMapping("/new-user/")
     public void newUser(@RequestBody User user){
         userService.createUser(user);
         System.out.println("Successfully created new user...");

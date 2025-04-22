@@ -1,6 +1,5 @@
 import { Button, Typography, Icon, Modal, Box, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import fetchUserInfoById from "../../js/FetchUserInfo";
 
 function handleUserInfouserId(userId) {

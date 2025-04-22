@@ -25,6 +25,7 @@ export default function RegisterCard() {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    console.log(firstName, lastName, userName, password);
     const response = createUser(firstName, lastName, userName, password);
     response.then(() => {
       navigate("/login");

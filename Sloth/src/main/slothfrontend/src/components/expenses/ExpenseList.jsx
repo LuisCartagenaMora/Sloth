@@ -74,7 +74,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
     };
 
     fetchAllExpenses();
-  }, [userId]);
+  }, [userId, expenses]);
 
   // useEffect(() => {
   //   const deleteCurrentExpense = async (expenseId) => {
@@ -142,110 +142,111 @@ export default function ExpenseList({ onStatusChange, userId }) {
               }}
             />
           </Typography>
-          <Typography className="expense-list">
-            <Stack
-              className="expense-list-stack"
-              spacing={2}
-              divider={<Divider orientation="horizontal" flexItem />}
+          {expenses.length === 0 && (
+            <Typography
+              variant="h6"
+              component="p"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {expenses.length === 0 && (
-                <Typography
-                  variant="h6"
-                  component="p"
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  No expenses available.
-                </Typography>
-              )}
-              {expenses.map((expense) => (
-                <Typography key={expense.expenseId}>
-                  <Stack direction="row" spacing={1} />
-                  <Tooltip title="Expense Category">
-                    <Chip
-                      className="individual-expense-chip"
-                      label={expense.category}
-                    />
-                  </Tooltip>
-                  <Tooltip title="Expense Date">
-                    <Chip
-                      className="individual-expense-chip"
-                      label={expense.date}
-                    />
-                  </Tooltip>
+              No expenses available.
+            </Typography>
+          )}
 
-                  <Typography
-                    className="individual-expense"
-                    variant="h6"
-                    component="p"
-                  >
-                    <Tooltip title="Expense Description">
-                      {expense.description}
+          {expenses.length !== 0 && (
+            <Typography className="expense-list">
+              <Stack className="expense-list-stack" spacing={2}>
+                {expenses.map((expense) => (
+                  <Typography key={expense.expenseId}>
+                    <Stack direction="row" spacing={1} />
+                    <Tooltip title="Expense Category">
+                      <Chip
+                        className="individual-expense-chip"
+                        label={expense.category}
+                      />
                     </Tooltip>
-                    <Tooltip title="Expense Amount">
-                      <Typography>
-                        <span>${expense.amount}</span>
-                      </Typography>
+                    <Tooltip title="Expense Date">
+                      <Chip
+                        className="individual-expense-chip"
+                        label={expense.date}
+                      />
                     </Tooltip>
 
-                    <Button
-                      className="expenses-delete-button"
-                      variant="contained"
-                      startIcon={<DeleteIcon />}
-                      color="error"
-                      onClick={() => deleteButton(expense.expenseId)}
+                    <Typography
+                      className="individual-expense"
+                      variant="h6"
+                      component="p"
                     >
-                      <span>Delete</span>
-                    </Button>
+                      <Tooltip title="Expense Description">
+                        {expense.description}
+                      </Tooltip>
+                      <Tooltip title="Expense Amount">
+                        <Typography>
+                          <span>${expense.amount}</span>
+                        </Typography>
+                      </Tooltip>
+
+                      <Button
+                        className="expenses-delete-button"
+                        variant="contained"
+                        startIcon={<DeleteIcon />}
+                        color="error"
+                        onClick={() => deleteButton(expense.expenseId)}
+                      >
+                        <span>Delete</span>
+                      </Button>
+                    </Typography>
                   </Typography>
-                </Typography>
-              ))}
-            </Stack>
-          </Typography>
+                ))}
+              </Stack>
+            </Typography>
+          )}
         </Card>
       </Stack>
-      <Stack spacing={2} sx={{ display: "flex", direction: "row" }}>
-        {pagination.currentPage > 1 && (
-          <Button
-            className="PaginationPrevButton"
-            sx={{ width: "20px" }}
-            onClick={() => {
-              const prevOffset = pagination.offset - 10;
-              const prevPage = pagination.currentPage - 1;
-              setPagination({
-                ...pagination,
-                offset: prevOffset,
-                currentPage: prevPage,
-              });
-              console.log("previous");
-            }}
-          >
-            Prev
-          </Button>
-        )}
-        <span>{pagination.currentPage}</span>
-        {pagination.currentPage < numberOfPages && (
-          <Button
-            className="PaginationNextButton"
-            sx={{ width: "20px" }}
-            onClick={() => {
-              const nextOffset = pagination.offset + 10;
-              const nextPage = pagination.currentPage + 1;
-              setPagination({
-                ...pagination,
-                offset: nextOffset,
-                currentPage: nextPage,
-              });
-              console.log(pagination);
-            }}
-          >
-            Next
-          </Button>
-        )}
-      </Stack>
+      {expenses.length > 0 && (
+        <Stack spacing={2} sx={{ display: "flex", direction: "row" }}>
+          {pagination.currentPage > 1 && (
+            <Button
+              className="PaginationPrevButton"
+              sx={{ width: "20px" }}
+              onClick={() => {
+                const prevOffset = pagination.offset - 10;
+                const prevPage = pagination.currentPage - 1;
+                setPagination({
+                  ...pagination,
+                  offset: prevOffset,
+                  currentPage: prevPage,
+                });
+                console.log("previous");
+              }}
+            >
+              Prev
+            </Button>
+          )}
+          <span>{pagination.currentPage}</span>
+          {pagination.currentPage < numberOfPages && (
+            <Button
+              className="PaginationNextButton"
+              sx={{ width: "20px" }}
+              onClick={() => {
+                const nextOffset = pagination.offset + 10;
+                const nextPage = pagination.currentPage + 1;
+                setPagination({
+                  ...pagination,
+                  offset: nextOffset,
+                  currentPage: nextPage,
+                });
+                console.log(pagination);
+              }}
+            >
+              Next
+            </Button>
+          )}
+        </Stack>
+      )}
       {/* <Stack spacing={2}>
         //Figure Out how this pagination can go backwards and change screen to
         reflect new set of expenses.

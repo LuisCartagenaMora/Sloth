@@ -113,22 +113,24 @@ export default function ExpenseLineChart({ userId }) {
   }));
 
   return (
-    <>
-      <BarChart
-        xAxis={[
-          {
-            scaleType: "band",
-            data: chartData.map((data) => data.month),
-          },
-        ]}
-        series={[
-          {
-            data: chartData.map((data) => data.total),
-          },
-        ]}
-        height={200}
-        width={500}
-      />
-    </>
+    expenses.length > 0 && (
+      <>
+        <BarChart
+          xAxis={[
+            {
+              scaleType: "band",
+              data: chartData.map((data) => data.month),
+            },
+          ]}
+          series={[
+            {
+              data: chartData.map((data) => data.total),
+            },
+          ]}
+          height={200}
+          width={500}
+        />
+      </>
+    )
   );
 }

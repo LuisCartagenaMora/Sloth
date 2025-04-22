@@ -75,18 +75,20 @@ export default function ExpensePieChart({ userId }) {
   }
 
   return (
-    <PieChart
-      series={[
-        {
-          data: unique.map((_, index) => ({
-            id: index,
-            value: totalAmountPerCategories[index],
-            label: unique[index],
-          })),
-        },
-      ]}
-      width={200}
-      height={200}
-    />
+    expenses.length > 0 && (
+      <PieChart
+        series={[
+          {
+            data: unique.map((_, index) => ({
+              id: index,
+              value: totalAmountPerCategories[index],
+              label: unique[index],
+            })),
+          },
+        ]}
+        width={200}
+        height={200}
+      />
+    )
   );
 }

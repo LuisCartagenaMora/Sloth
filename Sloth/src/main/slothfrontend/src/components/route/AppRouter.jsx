@@ -5,8 +5,6 @@ import Login from "../../login";
 import Registration from "./../../register";
 import Expenses from "./../../expenses";
 import AboutPage from "./../../about";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-const queryClient = new QueryClient();
 
 export default function AppRouter() {
   return (
