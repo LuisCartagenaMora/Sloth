@@ -15,6 +15,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import createExpense from "../../js/AddExpenseButton";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 export default function AddExpenseModal({ onStatusChange, userId }) {
   const [open, setOpen] = React.useState(false);
@@ -76,7 +79,17 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
                 setUserId(e.target.value);
               }}
             /> */}
-            <TextField
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                className="modal-text-field"
+                id="filled-required"
+                onChange={(value) => {
+                  console.log(value.getMonth());
+                  setDate(value.format("MM-DD-YYYY"));
+                }}
+              />
+            </LocalizationProvider>
+            {/* <TextField
               className="modal-text-field"
               required
               id="filled-required"
@@ -85,7 +98,7 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
               onChange={(e) => {
                 setDate(e.target.value);
               }}
-            />
+            /> */}
             <TextField
               className="modal-text-field"
               required

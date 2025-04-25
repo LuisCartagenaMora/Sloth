@@ -42,15 +42,15 @@ public class ExpenseController {
         return expenseService.getCurrentUsersExpensesBySelectedDateEqualsDate(userId, date);
     }
 
-    @GetMapping("/filter-expenses/{userId}/less={date}")
-    public List<Expense> getCurrentUsersExpensesBySelectedDateLessThanDate(@PathVariable Long userId, @PathVariable LocalDate date){
-        return expenseService.getCurrentUsersExpensesBySelectedDateLessThanDate(userId, date);
-    }
+    // @GetMapping("/filter-expenses/{userId}/less={date}")
+    // public List<Expense> getCurrentUsersExpensesBySelectedDateLessThanDate(@PathVariable Long userId, @PathVariable LocalDate date){
+    //     return expenseService.getCurrentUsersExpensesBySelectedDateLessThanDate(userId, date);
+    // }
 
-    @GetMapping("/filter-expenses/{userId}/greater={date}")
-    public List<Expense> getCurrentUsersExpensesBySelectedDateGreaterThanDate(@PathVariable Long userId, @PathVariable LocalDate date){
-        return expenseService.getCurrentUsersExpensesBySelectedDateGreaterThanDate(userId, date);
-    }
+    // @GetMapping("/filter-expenses/{userId}/greater={date}")
+    // public List<Expense> getCurrentUsersExpensesBySelectedDateGreaterThanDate(@PathVariable Long userId, @PathVariable LocalDate date){
+    //     return expenseService.getCurrentUsersExpensesBySelectedDateGreaterThanDate(userId, date);
+    // }
 
     @GetMapping("/filter-expenses")
     public List<Expense> getCurrentUsersExpensesBySelectedDateGreaterThanDate(@RequestParam Long userId, @RequestParam double low, @RequestParam double high){

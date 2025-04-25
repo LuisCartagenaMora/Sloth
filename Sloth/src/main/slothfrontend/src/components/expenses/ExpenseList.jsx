@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import {
   Card,
@@ -14,9 +14,11 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddExpenseModal from "./AddExpenseModal";
 import deleteButton from "../../js/DeleteExpenseButton";
+import ExpenseContext from "./ExpenseContext";
 
 export default function ExpenseList({ onStatusChange, userId }) {
-  const [expenses, setExpenses] = useState([]);
+  // const [expenses, setExpenses] = useState([]);
+  const { expenses, setExpenses } = useContext(ExpenseContext);
   const [numberOfPages, setNumberOfPages] = useState("");
   const [pagination, setPagination] = useState({
     limit: 10,
@@ -24,57 +26,73 @@ export default function ExpenseList({ onStatusChange, userId }) {
     currentPage: 1,
   });
 
+  console.log(expenses);
+
+  // useEffect(() => {
+  //   const fetchCurrentPageExpenses = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8081/expenses/${userId}?limit=${pagination.limit}&offset=${pagination.offset}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const result = response.json();
+  //       result.then((value) => {
+  //         setExpenses(value);
+  //       });
+  //     } catch (error) {
+  //       console.error("Failed to fetch all expenses:", error);
+  //     }
+  //   };
+
+  //   fetchCurrentPageExpenses();
+  // }, [userId, pagination]);
+
+  const getPaginatedExpenses = () => {
+    const startIndex = pagination.offset;
+    const endIndex = pagination.offset + pagination.limit;
+    console.log(startIndex);
+    console.log(endIndex);
+    return expenses.slice(startIndex, endIndex);
+  };
+
+  const listOfExpenses = getPaginatedExpenses();
+
   useEffect(() => {
-    const fetchCurrentPageExpenses = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8081/expenses/${userId}?limit=${pagination.limit}&offset=${pagination.offset}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = response.json();
-        result.then((value) => {
-          setExpenses(value);
-        });
-      } catch (error) {
-        console.error("Failed to fetch all expenses:", error);
-      }
-    };
+    setNumberOfPages(Math.ceil(expenses.length / 10));
+  });
 
-    fetchCurrentPageExpenses();
-  }, [userId, pagination]);
+  // useEffect(() => {
+  //   const fetchAllExpenses = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8081/all-expenses/${userId}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       // setNumberOfPages(Math.ceil(data.length / 10));
+  //     } catch (error) {
+  //       console.error("Failed to fetch all expenses:", error);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const fetchAllExpenses = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8081/all-expenses/${userId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setNumberOfPages(Math.ceil(data.length / 10));
-      } catch (error) {
-        console.error("Failed to fetch all expenses:", error);
-      }
-    };
-
-    fetchAllExpenses();
-  }, [userId, expenses]);
+  //   fetchAllExpenses();
+  // }, [userId, expenses]);
 
   // useEffect(() => {
   //   const deleteCurrentExpense = async (expenseId) => {
@@ -142,7 +160,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
               }}
             />
           </Typography>
-          {expenses.length === 0 && (
+          {listOfExpenses.length === 0 && (
             <Typography
               variant="h6"
               component="p"
@@ -156,10 +174,10 @@ export default function ExpenseList({ onStatusChange, userId }) {
             </Typography>
           )}
 
-          {expenses.length !== 0 && (
+          {listOfExpenses.length !== 0 && (
             <Typography className="expense-list">
               <Stack className="expense-list-stack" spacing={2}>
-                {expenses.map((expense) => (
+                {listOfExpenses.map((expense) => (
                   <Typography key={expense.expenseId}>
                     <Stack direction="row" spacing={1} />
                     <Tooltip title="Expense Category">
@@ -206,7 +224,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
           )}
         </Card>
       </Stack>
-      {expenses.length > 0 && (
+      {listOfExpenses.length > 0 && (
         <Stack spacing={2} sx={{ display: "flex", direction: "row" }}>
           {pagination.currentPage > 1 && (
             <Button

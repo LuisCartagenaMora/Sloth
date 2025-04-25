@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box } from "@mui/material";
 import { BarChart, PieChart } from "@mui/x-charts";
-import Calendar from "react-calendar";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import ExpenseContext from "./ExpenseContext";
 
 export default function ChartsCard({ userId }) {
-  const [expenses, setExpenses] = useState([]);
+  // const [expenses, setExpenses] = useState([]);
+  const { expenses, setExpenses } = useContext(ExpenseContext);
   const [sumPerMonth, setSumPerMonth] = useState({
     Jan: 0,
     Feb: 0,
@@ -20,30 +24,31 @@ export default function ChartsCard({ userId }) {
   });
 
   // Fetch all expenses when the component mounts or userId changes
-  useEffect(() => {
-    const fetchAllExpenses = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:8081/all-expenses/${userId}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setExpenses(data);
-      } catch (error) {
-        console.error("Failed to fetch all expenses:", error);
-      }
-    };
 
-    fetchAllExpenses();
-  }, [userId]);
+  // useEffect(() => {
+  //   const fetchAllExpenses = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:8081/all-expenses/${userId}`,
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+  //       setExpenses(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch all expenses:", error);
+  //     }
+  //   };
+
+  //   fetchAllExpenses();
+  // }, [userId]);
 
   // Calculate total expenditure per month whenever expenses change
   useEffect(() => {
@@ -140,14 +145,37 @@ export default function ChartsCard({ userId }) {
     total: sumPerMonth[month],
   }));
   //
+  console.log(expenses);
+
+  const filterDate = (year, month) => {
+    return expenses.filter((expense) => {
+      let expensesMonth = expense.date.slice(0, 2);
+      console.log(expensesMonth + "===" + month);
+      console.log(expensesMonth == month);
+      if (expensesMonth == month) {
+        return expense.date;
+      }
+    });
+  };
 
   return (
     <Box sx={{ width: 500 }}>
-      <Calendar
-        onChange={(value) => {
-          console.log(value);
-        }}
-      />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateCalendar
+          views={["year", "month"]}
+          openTo="year"
+          onChange={(value) => {
+            //Months are $M(0-11)
+            console.log(value);
+            console.log(
+              "Current year: " + value.$y + "\nCurrent month: " + value.$M
+            );
+            const result = filterDate(value.$y, value.$M);
+            console.log(result);
+            setExpenses(result);
+          }}
+        />
+      </LocalizationProvider>
       {expenses.length > 0 && (
         <PieChart
           series={[
