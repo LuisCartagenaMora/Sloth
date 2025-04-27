@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
+import { Box, Grid } from "@mui/material";
 import ReactDOM from "react-dom/client";
 import { useParams } from "react-router-dom";
 import "@material/top-app-bar/dist/mdc.top-app-bar.css";
@@ -8,10 +9,8 @@ import Header from "./components/expenses/Header.jsx";
 import App from "./components/expenses/App.jsx";
 import ExpenseList from "./components/expenses/ExpenseList.jsx";
 import ExpenseAlert from "./components/expenses/ExpenseAlert.jsx";
-import ExpensePieChartPieChart from "./components/expenses/ExpensePieChart.jsx";
 import ChartsCard from "./components/expenses/ChartsCard.jsx";
 import ExpenseContext from "./components/expenses/ExpenseContext.jsx";
-import ExpenseLineChart from "./components/expenses/ExpenseLineChart.jsx";
 import Calendar from "react-calendar";
 
 export default function Expenses() {
@@ -36,19 +35,14 @@ export default function Expenses() {
         }
         const data = await response.json();
         setExpenses(data);
-      } catch (error) {
-        console.error("Failed to fetch all expenses:", error);
-      }
+      } catch (error) {}
     };
 
     fetchAllExpenses();
   }, [userId]);
 
-  console.log(expenses);
-
   const handleAlertStatus = (value) => {
     setAlertStatus(value);
-    console.log("Alert status changed:", value);
   };
 
   setTimeout(() => {
@@ -61,8 +55,19 @@ export default function Expenses() {
       <App userId={userId} />
       <ExpenseAlert alertStatus={alertStatus} />
       <ExpenseContext.Provider value={{ expenses, setExpenses }}>
-        <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
-        <ChartsCard userId={userId} />
+        <Box sx={{ padding: 3 }}>
+          <Grid container spacing={2}>
+            {/* ExpenseList */}
+            <Grid item xs={12} md={6}>
+              <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
+            </Grid>
+
+            {/* ChartsCard */}
+            <Grid item xs={12} md={6}>
+              <ChartsCard userId={userId} />
+            </Grid>
+          </Grid>
+        </Box>
       </ExpenseContext.Provider>
 
       {/* <ExpensePieChartPieChart userId={userId} />

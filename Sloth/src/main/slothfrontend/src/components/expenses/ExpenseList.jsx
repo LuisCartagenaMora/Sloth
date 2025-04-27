@@ -8,9 +8,13 @@ import {
   Divider,
   Typography,
   Button,
+  IconButton,
   Tooltip,
   Pagination,
+  Icon,
 } from "@mui/material";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddExpenseModal from "./AddExpenseModal";
 import deleteButton from "../../js/DeleteExpenseButton";
@@ -26,40 +30,9 @@ export default function ExpenseList({ onStatusChange, userId }) {
     currentPage: 1,
   });
 
-  console.log(expenses);
-
-  // useEffect(() => {
-  //   const fetchCurrentPageExpenses = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8081/expenses/${userId}?limit=${pagination.limit}&offset=${pagination.offset}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       const result = response.json();
-  //       result.then((value) => {
-  //         setExpenses(value);
-  //       });
-  //     } catch (error) {
-  //       console.error("Failed to fetch all expenses:", error);
-  //     }
-  //   };
-
-  //   fetchCurrentPageExpenses();
-  // }, [userId, pagination]);
-
   const getPaginatedExpenses = () => {
     const startIndex = pagination.offset;
     const endIndex = pagination.offset + pagination.limit;
-    console.log(startIndex);
-    console.log(endIndex);
     return expenses.slice(startIndex, endIndex);
   };
 
@@ -69,75 +42,18 @@ export default function ExpenseList({ onStatusChange, userId }) {
     setNumberOfPages(Math.ceil(expenses.length / 10));
   });
 
-  // useEffect(() => {
-  //   const fetchAllExpenses = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8081/all-expenses/${userId}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       // setNumberOfPages(Math.ceil(data.length / 10));
-  //     } catch (error) {
-  //       console.error("Failed to fetch all expenses:", error);
-  //     }
-  //   };
-
-  //   fetchAllExpenses();
-  // }, [userId, expenses]);
-
-  // useEffect(() => {
-  //   const deleteCurrentExpense = async (expenseId) => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8081/delete-expense/${expenseId}`,
-  //         {
-  //           method: "DELETE",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to delete current expense.", error);
-  //     }
-  //   };
-
-  //   deleteCurrentExpense();
-  // }, [expenseId]);
-
   const handleAlertStatus = (value) => {
-    console.log("Alert status changed:", value);
     onStatusChange(value);
-    //Part of React query code
-    // // Refetch expenses when a new expense is added
-    // queryClient.invalidateQueries(["expenses", userId]);
   };
 
-  //Part of React query code
-  // if (isLoading) {
-  //   return <Typography>Loading expenses...</Typography>;
-  // }
-
-  // if (isError) {
-  //   return <Typography>Error loading expenses.</Typography>;
-  // }
-
-  console.log("Total number of pages: " + numberOfPages);
-
   return (
-    <Box sx={{ padding: 6, maxWidth: 500 }}>
+    <Box
+      sx={{
+        padding: 6,
+        minWidth: { md: 500 },
+        maxWidth: { md: 40 },
+      }}
+    >
       <Stack
         className="expense-list-stack"
         divider={<Divider sx={{ marginTop: 0 }} />}
@@ -153,10 +69,6 @@ export default function ExpenseList({ onStatusChange, userId }) {
               userId={userId}
               onStatusChange={(value) => {
                 handleAlertStatus(value);
-                console.log(
-                  "Alert status changed from AddExpenseModal:",
-                  value
-                );
               }}
             />
           </Typography>
@@ -226,68 +138,56 @@ export default function ExpenseList({ onStatusChange, userId }) {
       </Stack>
       {listOfExpenses.length > 0 && (
         <Stack spacing={2} sx={{ display: "flex", direction: "row" }}>
-          {pagination.currentPage > 1 && (
-            <Button
-              className="PaginationPrevButton"
-              sx={{ width: "20px" }}
-              onClick={() => {
-                const prevOffset = pagination.offset - 10;
-                const prevPage = pagination.currentPage - 1;
-                setPagination({
-                  ...pagination,
-                  offset: prevOffset,
-                  currentPage: prevPage,
-                });
-                console.log("previous");
-              }}
-            >
-              Prev
-            </Button>
-          )}
-          <span>{pagination.currentPage}</span>
-          {pagination.currentPage < numberOfPages && (
-            <Button
-              className="PaginationNextButton"
-              sx={{ width: "20px" }}
-              onClick={() => {
-                const nextOffset = pagination.offset + 10;
-                const nextPage = pagination.currentPage + 1;
-                setPagination({
-                  ...pagination,
-                  offset: nextOffset,
-                  currentPage: nextPage,
-                });
-                console.log(pagination);
-              }}
-            >
-              Next
-            </Button>
-          )}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            {pagination.currentPage > 1 && (
+              <IconButton
+                className="PaginationPrevButton"
+                variant="text"
+                aria-label="Left arrow"
+                sx={{ width: "20px" }}
+                onClick={() => {
+                  const prevOffset = pagination.offset - 10;
+                  const prevPage = pagination.currentPage - 1;
+                  setPagination({
+                    ...pagination,
+                    offset: prevOffset,
+                    currentPage: prevPage,
+                  });
+                }}
+              >
+                <KeyboardArrowLeftIcon />
+              </IconButton>
+            )}
+            <span>Page {pagination.currentPage}</span>
+            {pagination.currentPage < numberOfPages && (
+              <IconButton
+                className="PaginationNextButton"
+                variant="contained"
+                aria-label="Right arrow"
+                sx={{ width: "20px" }}
+                onClick={() => {
+                  const nextOffset = pagination.offset + 10;
+                  const nextPage = pagination.currentPage + 1;
+                  setPagination({
+                    ...pagination,
+                    offset: nextOffset,
+                    currentPage: nextPage,
+                  });
+                }}
+              >
+                <KeyboardArrowRightIcon />
+              </IconButton>
+            )}
+          </Box>
         </Stack>
       )}
-      {/* <Stack spacing={2}>
-        //Figure Out how this pagination can go backwards and change screen to
-        reflect new set of expenses.
-        <Pagination
-          sx={{ display: "flex", justifyContent: "center" }}
-          count={numberOfPages}
-          size="large"
-          onClick={() => {
-            const prevButton = document.getElementsByClassName(
-              ". MuiPaginationItem-previousNext"
-            );
-            console.log();
-            pagination.currentPage;
-            console.log("BEFORE: " + pagination.offset);
-            let newOffset = (pagination.offset += 10);
-            setPagination({
-              ...pagination, // Copy the existing properties
-              offset: newOffset, // Update the offset
-            });
-            console.log("AFTER: " + pagination.offset);
-          }}
-        />
-      </Stack> */}
     </Box>
   );
 }

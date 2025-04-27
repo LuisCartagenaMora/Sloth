@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { BarChart, PieChart } from "@mui/x-charts";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,8 +7,11 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import ExpenseContext from "./ExpenseContext";
 
 export default function ChartsCard({ userId }) {
-  // const [expenses, setExpenses] = useState([]);
   const { expenses, setExpenses } = useContext(ExpenseContext);
+  //copyList- holds a copy pf the original expense list.
+  const [copyList, setCopyList] = useState([]);
+  //filteredExpenses- holds the expense list where the filters are being applied.
+  const [filteredExpenses, setFilteredExpenses] = useState([]);
   const [sumPerMonth, setSumPerMonth] = useState({
     Jan: 0,
     Feb: 0,
@@ -50,6 +53,14 @@ export default function ChartsCard({ userId }) {
   //   fetchAllExpenses();
   // }, [userId]);
 
+  useEffect(() => {
+    setFilteredExpenses(expenses);
+    //Will only ever initialize the copyList once when it's empty.
+    if (copyList.length === 0) {
+      setCopyList(expenses);
+    }
+  }, [expenses]);
+
   // Calculate total expenditure per month whenever expenses change
   useEffect(() => {
     const calculateSumPerMonth = () => {
@@ -85,8 +96,8 @@ export default function ChartsCard({ userId }) {
         12: "Dec",
       };
 
-      expenses.forEach((expense) => {
-        const month = matchDate[expense.date.slice(5, 7)];
+      filteredExpenses.forEach((expense) => {
+        const month = matchDate[expense.date.slice(0, 2)];
         if (month) {
           newSumPerMonth[month] += expense.amount;
         }
@@ -96,15 +107,14 @@ export default function ChartsCard({ userId }) {
     };
 
     calculateSumPerMonth();
-  }, [expenses]);
+  }, [filteredExpenses]);
 
-  const expensesCategory = expenses.map((expense) => {
+  const expensesCategory = filteredExpenses.map((expense) => {
     return expense.category;
   });
 
   //Gets unique list of categories from current list of expenses
   let unique = [...new Set(expensesCategory)];
-
   //Array which stores the total sum amount per expense category that is unique.
   let totalAmountPerCategories = [];
 
@@ -114,9 +124,9 @@ export default function ChartsCard({ userId }) {
   for (let i = 0; i < unique.length; i++) {
     let sum = 0;
     // console.log("Checking " + unique[i]);
-    for (let j = 0; j < expenses.length; j++) {
-      if (unique[i] === expenses[j].category) {
-        sum += expenses[j].amount;
+    for (let j = 0; j < filteredExpenses.length; j++) {
+      if (unique[i] === filteredExpenses[j].category) {
+        sum += filteredExpenses[j].amount;
       }
     }
     totalAmountPerCategories.push(sum);
@@ -144,14 +154,11 @@ export default function ChartsCard({ userId }) {
     month,
     total: sumPerMonth[month],
   }));
-  //
-  console.log(expenses);
 
-  const filterDate = (year, month) => {
-    return expenses.filter((expense) => {
+  const filterDate = (month) => {
+    return copyList.filter((expense) => {
+      //Gets the month (e.g. 04 -> March) from the expense
       let expensesMonth = expense.date.slice(0, 2);
-      console.log(expensesMonth + "===" + month);
-      console.log(expensesMonth == month);
       if (expensesMonth == month) {
         return expense.date;
       }
@@ -160,23 +167,25 @@ export default function ChartsCard({ userId }) {
 
   return (
     <Box sx={{ width: 500 }}>
+      <Button
+        onClick={() => {
+          setExpenses(copyList);
+        }}
+      >
+        Reset
+      </Button>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
-          views={["year", "month"]}
-          openTo="year"
+          views={["month"]}
+          openTo="month"
           onChange={(value) => {
-            //Months are $M(0-11)
-            console.log(value);
-            console.log(
-              "Current year: " + value.$y + "\nCurrent month: " + value.$M
-            );
-            const result = filterDate(value.$y, value.$M);
-            console.log(result);
+            //Adding 1 corrects the order of months (e.g. 0 to 1 => January... 12 => December)
+            const result = filterDate(value.$M + 1);
             setExpenses(result);
           }}
         />
       </LocalizationProvider>
-      {expenses.length > 0 && (
+      {filteredExpenses.length > 0 && (
         <PieChart
           series={[
             {
@@ -191,7 +200,7 @@ export default function ChartsCard({ userId }) {
           height={200}
         />
       )}
-      {expenses.length > 0 && (
+      {filteredExpenses.length > 0 && (
         <>
           <BarChart
             xAxis={[

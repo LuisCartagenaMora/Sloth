@@ -84,7 +84,6 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
                 className="modal-text-field"
                 id="filled-required"
                 onChange={(value) => {
-                  console.log(value.getMonth());
                   setDate(value.format("MM-DD-YYYY"));
                 }}
               />
