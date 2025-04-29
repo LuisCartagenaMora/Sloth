@@ -1,5 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Select,
+  FormGroup,
+  FormControlLabel,
+  Grid,
+  Typography,
+  MenuItem,
+  Chip,
+  Accordion,
+  AccordionActions,
+  AccordionDetails,
+  AccordionSummary,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { BarChart, PieChart } from "@mui/x-charts";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -149,6 +168,27 @@ export default function ChartsCard({ userId }) {
     "Dec",
   ];
 
+  const categories = [
+    "Housing",
+    "Utilities",
+    "Transportation",
+    "Food & Groceries",
+    "Entertainment",
+    "Health & Fitness",
+    "Personal Care & Hygeine",
+    "Clothing",
+    "Education",
+    "Childcare & Kids",
+    "Travel",
+    "Gifts",
+    "Saving & Instruments",
+    "Insurance",
+    "Debt Repayment",
+    "Pets",
+    "Subscriptions",
+    "Miscellaneous",
+  ];
+
   // Prepare data for the BarChart
   const chartData = months.map((month) => ({
     month,
@@ -165,60 +205,157 @@ export default function ChartsCard({ userId }) {
     });
   };
 
+  const filterCategory = (categories) => {
+    return copyList.filter((expense) => {
+      //Gets the month (e.g. 04 -> March) from the expense
+      let expensesCategories = expense.category;
+      if (expensesCategories == categories) {
+        return expense.date;
+      }
+    });
+  };
+
   return (
-    <Box sx={{ width: 500 }}>
+    <Box
+      sx={{
+        width: 500,
+      }}
+    >
       <Button
+        sx={{ mb: 1 }}
+        variant="contained"
         onClick={() => {
           setExpenses(copyList);
         }}
       >
         Reset
       </Button>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar
-          views={["month"]}
-          openTo="month"
+      {/* <FormControl sx={{ m: 1, p: 1, width: 250 }}>
+        <InputLabel>Category</InputLabel>
+        <Select
           onChange={(value) => {
-            //Adding 1 corrects the order of months (e.g. 0 to 1 => January... 12 => December)
-            const result = filterDate(value.$M + 1);
+            const result = filterCategory(value.target.value);
             setExpenses(result);
           }}
-        />
-      </LocalizationProvider>
-      {filteredExpenses.length > 0 && (
-        <PieChart
-          series={[
-            {
-              data: unique.map((_, index) => ({
-                id: index,
-                value: totalAmountPerCategories[index],
-                label: unique[index],
-              })),
-            },
-          ]}
-          width={200}
-          height={200}
-        />
-      )}
-      {filteredExpenses.length > 0 && (
-        <>
-          <BarChart
-            xAxis={[
-              {
-                scaleType: "band",
-                data: chartData.map((data) => data.month),
-              },
-            ]}
-            series={[
-              {
-                data: chartData.map((data) => data.total),
-              },
-            ]}
-            height={200}
-            width={500}
-          />
-        </>
-      )}
+          // renderValue={(selected) => (
+          //   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+          //     {selected.map((value) => (
+          //       <Chip key={value} label={value} />
+          //     ))}
+          //   </Box>
+          // )}
+        >
+          {categories.map((category) => (
+            <MenuItem key={category} value={category}>
+              {category}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl> */}
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1-content"
+          id="panel1-header"
+        >
+          <Typography component="span" variant="h5">
+            Categories
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <FormGroup>
+            {categories.map((category) => {
+              return (
+                <FormControlLabel
+                  key={category}
+                  control={
+                    <Checkbox
+                      value={category}
+                      onClick={(e) => {
+                        console.log(e.target.value);
+                        const result = filterCategory(e.target.value);
+                        setExpenses(result);
+                      }}
+                    />
+                  }
+                  label={category}
+                />
+              );
+            })}
+          </FormGroup>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+        >
+          <Typography component="span" variant="h5">
+            Calendar
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateCalendar
+              views={["month"]}
+              openTo="month"
+              onChange={(value) => {
+                //Adding 1 corrects the order of months (e.g. 0 to 1 => January... 12 => December)
+                const result = filterDate(value.$M + 1);
+                setExpenses(result);
+              }}
+            />
+          </LocalizationProvider>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion defaultExpanded>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3-content"
+          id="panel3-header"
+        >
+          <Typography component="span" variant="h5">
+            Charts
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          {filteredExpenses.length > 0 && (
+            <PieChart
+              series={[
+                {
+                  data: unique.map((_, index) => ({
+                    id: index,
+                    value: totalAmountPerCategories[index],
+                    label: unique[index],
+                  })),
+                },
+              ]}
+              width={200}
+              height={200}
+            />
+          )}
+          {filteredExpenses.length > 0 && (
+            <>
+              <BarChart
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    data: chartData.map((data) => data.month),
+                  },
+                ]}
+                series={[
+                  {
+                    data: chartData.map((data) => data.total),
+                  },
+                ]}
+                height={200}
+                width={500}
+              />
+            </>
+          )}
+        </AccordionDetails>
+      </Accordion>
     </Box>
   );
 }

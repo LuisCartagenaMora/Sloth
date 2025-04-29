@@ -49,7 +49,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
   return (
     <Box
       sx={{
-        padding: 6,
+        padding: 3.7,
         minWidth: { md: 500 },
         maxWidth: { md: 40 },
       }}
@@ -61,7 +61,7 @@ export default function ExpenseList({ onStatusChange, userId }) {
         <Card variant="outlined">
           <Typography
             className="expense-list-header"
-            variant="h6"
+            variant="h5"
             component="p"
           >
             Expenses

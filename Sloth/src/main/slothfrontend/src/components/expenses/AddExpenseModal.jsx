@@ -47,7 +47,7 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
           handleOpen();
         }}
       >
-        <Icon fontSize="small">add_circle</Icon>
+        <Icon fontSize="medium">add_circle</Icon>
         Add Expense
       </Button>
 
