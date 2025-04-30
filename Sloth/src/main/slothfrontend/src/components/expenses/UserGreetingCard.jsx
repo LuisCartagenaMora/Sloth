@@ -39,7 +39,7 @@ async function fetchUserById(userId) {
   return response.json();
 }
 
-export default function App({ userId }) {
+export default function UserGreetingCard({ userId }) {
   const [open, setOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [budget, setBudget] = useState("");
@@ -56,11 +56,17 @@ export default function App({ userId }) {
   }, [userId]);
   return (
     <div className="user-info">
-      <Typography className="" variant="h3">
-        Welcome, {currentUser.first_name + " " + currentUser.last_name}
-      </Typography>
-      {/* Change this later on to make use of useState() */}
-      <Typography variant="h5">Budget: ${currentUser.budget} </Typography>
+      {/* Prevents "Welcome, undefined undefined" from being displayed before the names are loaded. */}
+      {currentUser.first_name && currentUser.last_name !== undefined && (
+        <>
+          <Typography className="" variant="h3">
+            Welcome, {currentUser.first_name + " " + currentUser.last_name}
+          </Typography>
+        </>
+      )}
+
+      {/* Add again for budget functionality */}
+      {/* <Typography variant="h5">Budget: ${currentUser.budget} </Typography>
       <Button
         variant="transparent"
         onClick={() => {
@@ -68,7 +74,7 @@ export default function App({ userId }) {
         }}
       >
         <Icon fontSize="large">add_circle</Icon>
-        Add Budget
+        <span>Add Budget</span>
       </Button>
 
       <Modal
@@ -110,7 +116,7 @@ export default function App({ userId }) {
             Update
           </Button>
         </Box>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

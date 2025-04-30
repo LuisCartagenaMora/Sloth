@@ -6,7 +6,7 @@ import "@material/top-app-bar/dist/mdc.top-app-bar.css";
 import "@material/icon-button/dist/mdc.icon-button.css";
 import "@material/ripple/dist/mdc.ripple.css"; // optional but usually needed
 import Header from "./components/expenses/Header.jsx";
-import App from "./components/expenses/App.jsx";
+import UserGreetingCard from "./components/expenses/UserGreetingCard.jsx";
 import ExpenseList from "./components/expenses/ExpenseList.jsx";
 import ExpenseAlert from "./components/expenses/ExpenseAlert.jsx";
 import ChartsCard from "./components/expenses/ChartsCard.jsx";
@@ -52,11 +52,11 @@ export default function Expenses() {
   return (
     <>
       <Header />
-      <App userId={userId} />
+      <UserGreetingCard userId={userId} />
       <ExpenseAlert alertStatus={alertStatus} />
       <ExpenseContext.Provider value={{ expenses, setExpenses }}>
         <Box sx={{ padding: 3 }}>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{ m: 6 }}>
             {/* ExpenseList */}
             <Grid item xs={12} md={6}>
               <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
@@ -77,4 +77,5 @@ export default function Expenses() {
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const style = document.getElementById("root");
 root.render(<Expenses />);

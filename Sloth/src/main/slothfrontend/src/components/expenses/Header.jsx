@@ -71,7 +71,7 @@ export default function TemporaryDrawer() {
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Favorite">favorite</button> */}
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button> */}
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Options">more_vert</button> */}
-            <Button>
+            {/* <Button>
               <FormGroup>
                 <FormControlLabel
                   sx={{
@@ -83,7 +83,7 @@ export default function TemporaryDrawer() {
                   label="Light/Dark Mode"
                 />
               </FormGroup>
-            </Button>
+            </Button> */}
           </section>
         </div>
       </header>

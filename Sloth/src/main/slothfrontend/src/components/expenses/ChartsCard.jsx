@@ -17,6 +17,9 @@ import {
   AccordionActions,
   AccordionDetails,
   AccordionSummary,
+  Card,
+  Stack,
+  Divider,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { BarChart, PieChart } from "@mui/x-charts";
@@ -216,21 +219,30 @@ export default function ChartsCard({ userId }) {
   };
 
   return (
-    <Box
-      sx={{
-        width: 500,
-      }}
+    <Stack
+      className="expense-list-stack"
+      divider={<Divider sx={{ marginTop: 0 }} />}
     >
-      <Button
-        sx={{ mb: 1 }}
-        variant="contained"
-        onClick={() => {
-          setExpenses(copyList);
-        }}
-      >
-        Reset
-      </Button>
-      {/* <FormControl sx={{ m: 1, p: 1, width: 250 }}>
+      <Card variant="outlined">
+        <Box
+          sx={{
+            width: 500,
+          }}
+        >
+          <Typography className="expense-list-header" variant="h5">
+            Filter
+            <Button
+              variant="outline
+              "
+              onClick={() => {
+                setExpenses(copyList);
+              }}
+            >
+              Reset Filter
+            </Button>
+          </Typography>
+
+          {/* <FormControl sx={{ m: 1, p: 1, width: 250 }}>
         <InputLabel>Category</InputLabel>
         <Select
           onChange={(value) => {
@@ -252,110 +264,112 @@ export default function ChartsCard({ userId }) {
           ))}
         </Select>
       </FormControl> */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          <Typography component="span" variant="h5">
-            Categories
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormGroup>
-            {categories.map((category) => {
-              return (
-                <FormControlLabel
-                  key={category}
-                  control={
-                    <Checkbox
-                      value={category}
-                      onClick={(e) => {
-                        console.log(e.target.value);
-                        const result = filterCategory(e.target.value);
-                        setExpenses(result);
-                      }}
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              <Typography component="span" variant="h5">
+                Categories
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <FormGroup>
+                {categories.map((category) => {
+                  return (
+                    <FormControlLabel
+                      key={category}
+                      control={
+                        <Checkbox
+                          value={category}
+                          onClick={(e) => {
+                            console.log(e.target.value);
+                            const result = filterCategory(e.target.value);
+                            setExpenses(result);
+                          }}
+                        />
+                      }
+                      label={category}
                     />
-                  }
-                  label={category}
+                  );
+                })}
+              </FormGroup>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2-content"
+              id="panel2-header"
+            >
+              <Typography component="span" variant="h5">
+                Calendar
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateCalendar
+                  views={["month"]}
+                  openTo="month"
+                  onChange={(value) => {
+                    //Adding 1 corrects the order of months (e.g. 0 to 1 => January... 12 => December)
+                    const result = filterDate(value.$M + 1);
+                    setExpenses(result);
+                  }}
                 />
-              );
-            })}
-          </FormGroup>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          <Typography component="span" variant="h5">
-            Calendar
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar
-              views={["month"]}
-              openTo="month"
-              onChange={(value) => {
-                //Adding 1 corrects the order of months (e.g. 0 to 1 => January... 12 => December)
-                const result = filterDate(value.$M + 1);
-                setExpenses(result);
-              }}
-            />
-          </LocalizationProvider>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3-content"
-          id="panel3-header"
-        >
-          <Typography component="span" variant="h5">
-            Charts
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {filteredExpenses.length > 0 && (
-            <PieChart
-              series={[
-                {
-                  data: unique.map((_, index) => ({
-                    id: index,
-                    value: totalAmountPerCategories[index],
-                    label: unique[index],
-                  })),
-                },
-              ]}
-              width={200}
-              height={200}
-            />
-          )}
-          {filteredExpenses.length > 0 && (
-            <>
-              <BarChart
-                xAxis={[
-                  {
-                    scaleType: "band",
-                    data: chartData.map((data) => data.month),
-                  },
-                ]}
-                series={[
-                  {
-                    data: chartData.map((data) => data.total),
-                  },
-                ]}
-                height={200}
-                width={500}
-              />
-            </>
-          )}
-        </AccordionDetails>
-      </Accordion>
-    </Box>
+              </LocalizationProvider>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion defaultExpanded>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel3-content"
+              id="panel3-header"
+            >
+              <Typography component="span" variant="h5">
+                Charts
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              {filteredExpenses.length > 0 && (
+                <PieChart
+                  series={[
+                    {
+                      data: unique.map((_, index) => ({
+                        id: index,
+                        value: totalAmountPerCategories[index],
+                        label: unique[index],
+                      })),
+                    },
+                  ]}
+                  width={200}
+                  height={200}
+                />
+              )}
+              {filteredExpenses.length > 0 && (
+                <>
+                  <BarChart
+                    xAxis={[
+                      {
+                        scaleType: "band",
+                        data: chartData.map((data) => data.month),
+                      },
+                    ]}
+                    series={[
+                      {
+                        data: chartData.map((data) => data.total),
+                      },
+                    ]}
+                    height={200}
+                    width={500}
+                  />
+                </>
+              )}
+            </AccordionDetails>
+          </Accordion>
+        </Box>
+      </Card>
+    </Stack>
   );
 }

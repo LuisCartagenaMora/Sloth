@@ -49,7 +49,6 @@ export default function ExpenseList({ onStatusChange, userId }) {
   return (
     <Box
       sx={{
-        padding: 3.7,
         minWidth: { md: 500 },
         maxWidth: { md: 40 },
       }}
