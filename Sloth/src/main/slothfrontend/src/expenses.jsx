@@ -50,7 +50,15 @@ export default function Expenses() {
   }, 5000);
 
   return (
-    <>
+    <Box
+      sx={{
+        backgroundImage:
+          "url(https://www.transparenttextures.com/patterns/diamond-upholstery.png)",
+        backgroundSize: "cover",
+        backgroundRepeat: "repeat",
+        py: 10,
+      }}
+    >
       <Header />
       <UserGreetingCard userId={userId} />
       <ExpenseAlert alertStatus={alertStatus} />
@@ -72,10 +80,9 @@ export default function Expenses() {
 
       {/* <ExpensePieChartPieChart userId={userId} />
       <ExpenseLineChart userId={userId} /> */}
-    </>
+    </Box>
   );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const style = document.getElementById("root");
 root.render(<Expenses />);
