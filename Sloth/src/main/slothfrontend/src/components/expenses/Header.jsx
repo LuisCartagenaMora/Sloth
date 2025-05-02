@@ -38,7 +38,7 @@ export default function TemporaryDrawer() {
                   } else if (index === 1) {
                     navigate("/about");
                   } else if (index === 2) {
-                    navigate("/login");
+                    navigate("/home");
                   }
                 }}
               />
@@ -55,12 +55,15 @@ export default function TemporaryDrawer() {
         <div className="mdc-top-app-bar__row">
           <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <div>
-              <Button onClick={toggleDrawer(true)}>
+              {/* Uncomment to use the drawer. Might use if there are more options
+              to add here. Too little options to use. */}
+
+              {/* <Button onClick={toggleDrawer(true)}>
                 <MenuIcon fontSize="large" color="action"></MenuIcon>
               </Button>
               <Drawer open={open} onClose={toggleDrawer(false)}>
                 {DrawerList}
-              </Drawer>
+              </Drawer> */}
             </div>
             <span className="mdc-top-app-bar__title">Sloth Expenses</span>
           </section>
@@ -68,6 +71,13 @@ export default function TemporaryDrawer() {
             className="mdc-top-app-bar__section mdc-top-app-bar__section--align-end"
             role="toolbar"
           >
+            <Button
+              onClick={() => {
+                navigate("/home");
+              }}
+            >
+              Logout
+            </Button>
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Favorite">favorite</button> */}
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Search">search</button> */}
             {/*               <button className="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Options">more_vert</button> */}

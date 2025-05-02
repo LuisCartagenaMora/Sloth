@@ -95,6 +95,7 @@ export default function LoginCard() {
           onClick={handleClick}
           sx={{
             bgcolor: "primary.main",
+            color: "white",
             "&:hover": {
               bgcolor: "primary.dark",
             },

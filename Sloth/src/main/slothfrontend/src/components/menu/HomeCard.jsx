@@ -11,8 +11,11 @@ import {
 import InfoIcon from "@mui/icons-material/Info";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import AssessmentIcon from "@mui/icons-material/Assessment";
+import UserModal from "../expenses/UserModal";
+import { useNavigate } from "react-router-dom";
 
 export default function SlothHome() {
+  const navigate = useNavigate();
   return (
     <Container maxWidth="lg" sx={{ py: 5 }}>
       <Box sx={{ textAlign: "center", mb: 5 }}>
@@ -94,8 +97,17 @@ export default function SlothHome() {
 
         <Grid item xs={12}>
           <Box textAlign="center" mt={4}>
-            <Button variant="contained" color="primary" size="large">
-              Start Managing Your Expenses
+            <UserModal />
+            <Button
+              sx={{ ml: 5 }}
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Return to your expenses
             </Button>
           </Box>
         </Grid>

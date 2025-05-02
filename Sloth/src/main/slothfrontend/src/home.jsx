@@ -1,7 +1,5 @@
 import React from "react";
-import RegisterCard from "./components/login/RegisterCard";
-import LoginCard from "./components/login/LoginCard";
-import SlothHome from "./components/login/HomeCard";
+import SlothHome from "./components/menu/HomeCard";
 import About from "./about";
 import { Box } from "@mui/material";
 
@@ -17,8 +15,6 @@ export default function Home() {
       }}
     >
       <SlothHome />
-      <RegisterCard />
-      <LoginCard />
       <About />
     </Box>
   );

@@ -31,7 +31,10 @@ const carouselItems = [
 export default function AboutSlothExpenses() {
   return (
     <Box>
-      <Container maxWidth="md">
+      <Container
+        maxWidth="md"
+        sx={{ backgroundColor: "white", p: 4, borderRadius: 5 }}
+      >
         <Box sx={{ textAlign: "center", mb: 5 }}>
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             About Sloth Expenses
@@ -50,7 +53,10 @@ export default function AboutSlothExpenses() {
           indicatorIconButtonProps={{ style: { padding: "10px" } }}
         >
           {carouselItems.map((item, index) => (
-            <Card key={index} sx={{ p: 4, boxShadow: 4, mb: 4 }}>
+            <Card
+              key={index}
+              sx={{ p: 4, boxShadow: 4, mb: 4, backgroundColor: "ghostwhite" }}
+            >
               <CardContent>
                 <Box display="flex" alignItems="center" mb={2}>
                   {item.icon}

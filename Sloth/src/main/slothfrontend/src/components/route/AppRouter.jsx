@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Expenses from "./../../expenses";
 import AboutPage from "./../../about";
 import Home from "./../../home";
+import LoginPage from "../menu/LoginPage";
 
 export default function AppRouter() {
   return (
@@ -11,8 +12,8 @@ export default function AppRouter() {
       <Routes>
         <Route path="/expenses/:userId" element={<Expenses />} />
         <Route path="/about" element={<AboutPage />} />
-        {/* <Route path="/register" element={<Registration />} />
-        <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/register" element={<Registration />} /> */}
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<Home />} />
         <Route path="/" element={<Navigate to="/home" />} />
         {/* {routeIndex === 0 && <Route path="/expenses" element={<Expenses />} />}

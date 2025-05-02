@@ -41,7 +41,8 @@ export default function RegisterCard() {
           justifyItems: "center",
           width: 1 / 4,
           border: "1px solid grey",
-          boxShadow: "10px 10px 5px lightblue;",
+          // boxShadow: "10px 10px 5px lightblue;",
+          backgroundColor: "whitesmoke",
         }}
         // sx={{
         //   display: "flex",
@@ -103,6 +104,7 @@ export default function RegisterCard() {
           onClick={handleClick}
           sx={{
             bgcolor: "primary.main",
+            color: "white",
             "&:hover": {
               bgcolor: "primary.dark",
             },
