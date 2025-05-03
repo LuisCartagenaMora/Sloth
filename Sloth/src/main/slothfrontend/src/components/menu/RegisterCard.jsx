@@ -37,8 +37,9 @@ export default function RegisterCard() {
       <Container
         sx={{
           display: "grid",
+          mt: 30,
           alignContent: "center",
-          justifyItems: "center",
+          justifyItems: "start",
           width: 1 / 4,
           border: "1px solid grey",
           // boxShadow: "10px 10px 5px lightblue;",
@@ -54,13 +55,18 @@ export default function RegisterCard() {
         //   boxShadow: "10px 10px 5px lightblue;",
         // }}
       >
-        <Typography variant="h4">Register</Typography>
+        <Typography variant="h4" sx={{ pl: 1 }}>
+          Register
+        </Typography>
+        <Typography variant="h6" sx={{ pl: 1 }}>
+          Please register your information
+        </Typography>
         <Box>
           <Typography
             sx={{
               display: "flex",
               flexDirection: "column",
-              p: 2,
+              p: 0,
             }}
           >
             <TextField
@@ -100,18 +106,21 @@ export default function RegisterCard() {
             ></TextField>
           </Typography>
         </Box>
-        <Button
-          onClick={handleClick}
-          sx={{
-            bgcolor: "primary.main",
-            color: "white",
-            "&:hover": {
-              bgcolor: "primary.dark",
-            },
-          }}
-        >
-          <span>Create</span>
-        </Button>
+        <Box sx={{ display: "flex", justifyItems: "center" }}>
+          <Button
+            onClick={handleClick}
+            sx={{
+              justifyContent: "center",
+              bgcolor: "primary.main",
+              color: "white",
+              "&:hover": {
+                bgcolor: "primary.dark",
+              },
+            }}
+          >
+            <span>Create</span>
+          </Button>
+        </Box>
       </Container>
     </>
   );
