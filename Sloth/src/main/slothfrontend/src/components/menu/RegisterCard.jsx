@@ -41,7 +41,9 @@ export default function RegisterCard() {
           alignContent: "center",
           justifyItems: "start",
           width: 1 / 4,
+          padding: [0, 3],
           border: "1px solid grey",
+          borderRadius: 5,
           // boxShadow: "10px 10px 5px lightblue;",
           backgroundColor: "whitesmoke",
         }}
@@ -56,9 +58,9 @@ export default function RegisterCard() {
         // }}
       >
         <Typography variant="h4" sx={{ pl: 1 }}>
-          Register
+          Registration
         </Typography>
-        <Typography variant="h6" sx={{ pl: 1 }}>
+        <Typography variant="h6" color="text.secondary" sx={{ pl: 1, mb: 2 }}>
           Please register your information
         </Typography>
         <Box>
@@ -71,14 +73,14 @@ export default function RegisterCard() {
           >
             <TextField
               label={"First Name"}
-              sx={{ p: 1 }}
+              sx={{ p: 1, mb: 0.3 }}
               onChange={(e) => {
                 setFirstName(e.target.value);
               }}
             ></TextField>
             <TextField
               label={"Last Name"}
-              sx={{ p: 1 }}
+              sx={{ p: 1, mb: 0.3 }}
               onChange={(e) => {
                 setLastName(e.target.value);
               }}
@@ -92,25 +94,35 @@ export default function RegisterCard() {
             ></TextField> */}
             <TextField
               label={"Username"}
-              sx={{ p: 1 }}
+              sx={{ p: 1, mb: 0.3 }}
               onChange={(e) => {
                 setUserName(e.target.value);
               }}
             ></TextField>
             <TextField
               label={"Password"}
-              sx={{ p: 1 }}
+              sx={{ p: 1, mb: 0.3 }}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             ></TextField>
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", justifyItems: "center" }}>
+        <Box
+          id="abcd"
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            borderRadius: 5,
+            width: 300,
+          }}
+        >
           <Button
             onClick={handleClick}
             sx={{
-              justifyContent: "center",
+              mt: 1,
+              width: 300,
+              borderRadius: 5,
               bgcolor: "primary.main",
               color: "white",
               "&:hover": {

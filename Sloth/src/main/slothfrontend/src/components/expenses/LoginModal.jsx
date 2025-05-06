@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Button, Modal } from "@mui/material";
-import RegisterCard from "../menu/RegisterCard";
 import LoginCard from "../menu/LoginCard";
 
 export default function UserModal() {
@@ -18,14 +17,14 @@ export default function UserModal() {
           handleOpen();
         }}
       >
-        START MANAGING YOUR EXPENSES
+        RETURN TO YOUR EXPENSES
       </Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
       >
-        <RegisterCard />
+        <LoginCard />
         {/* <LoginCard /> */}
       </Modal>
     </>

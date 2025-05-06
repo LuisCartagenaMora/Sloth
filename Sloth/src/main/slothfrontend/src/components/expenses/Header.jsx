@@ -50,7 +50,7 @@ export default function TemporaryDrawer() {
     </Box>
   );
   return (
-    <>
+    <Box sx={{ transformOrigin: "top left" }}>
       <header className="mdc-top-app-bar">
         <div className="mdc-top-app-bar__row">
           <section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
@@ -72,6 +72,8 @@ export default function TemporaryDrawer() {
             role="toolbar"
           >
             <Button
+              variant="contained"
+              color="error"
               onClick={() => {
                 navigate("/home");
               }}
@@ -98,6 +100,6 @@ export default function TemporaryDrawer() {
         </div>
       </header>
       <main className="mdc-top-app-bar--fixed-adjust"></main>
-    </>
+    </Box>
   );
 }
