@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 export default function TemporaryDrawer() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate(); // Hook to programmatically navigate
+  //Helps return the current user to their list of expenses
+  let userId = Number(localStorage.getItem("userId"));
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -72,8 +74,23 @@ export default function TemporaryDrawer() {
             role="toolbar"
           >
             <Button
-              variant="contained"
-              color="error"
+              sx={{ color: "white" }}
+              onClick={() => {
+                navigate("/about");
+              }}
+            >
+              About
+            </Button>
+            <Button
+              sx={{ color: "white" }}
+              onClick={() => {
+                navigate("/expenses/" + userId);
+              }}
+            >
+              Expenses
+            </Button>
+            <Button
+              sx={{ color: "white" }}
               onClick={() => {
                 navigate("/home");
               }}

@@ -29,6 +29,7 @@ export default function LoginCard() {
     const userDetails = userVerification(userName, password);
     userDetails.then((user) => {
       const userDetails = userCredentials(user);
+      localStorage.setItem("userId", userDetails.userId);
       userDetails === null
         ? console.log("Unable to login due to incorrect credentials.")
         : navigate("/expenses/" + userDetails.userId);

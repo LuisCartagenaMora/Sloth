@@ -44,9 +44,6 @@ export default function UserGreetingCard({ userId }) {
   const [currentUser, setCurrentUser] = useState({});
   const [budget, setBudget] = useState("");
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   useEffect(() => {
     const user = handleUserInfouserId(userId);
     user.then((value) => {

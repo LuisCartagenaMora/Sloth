@@ -15,7 +15,6 @@ export default function Home() {
     // }}
     >
       <SlothHome />
-      <About />
     </Box>
   );
 }

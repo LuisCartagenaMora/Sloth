@@ -64,7 +64,7 @@ export default function Expenses() {
       <ExpenseAlert alertStatus={alertStatus} />
       <ExpenseContext.Provider value={{ expenses, setExpenses }}>
         <Box sx={{ padding: 3 }}>
-          <Grid container spacing={2} sx={{ m: 6 }}>
+          <Grid container spacing={1}>
             {/* ExpenseList */}
             <Grid item xs={12} md={6}>
               <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
