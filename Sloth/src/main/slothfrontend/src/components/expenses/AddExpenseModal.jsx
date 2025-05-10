@@ -2,13 +2,11 @@
 import * as React from "react";
 import {
   Modal,
-  Box,
+  Container,
   Typography,
   Button,
   Icon,
-  Backdrop,
   TextField,
-  Alert,
   FormControl,
   InputLabel,
   Select,
@@ -56,13 +54,18 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
       >
-        <Box
+        <Container
           sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            mt: { xs: 10, sm: 20, md: 30 }, // Adjust top margin for different screen sizes
+            width: { xs: "60%", sm: "40%", md: "30%", lg: "20%", xlg: "5%" }, // Responsive width
+            p: 2,
+            border: "1px solid grey",
+            borderRadius: 5,
+            // boxShadow: "10px 10px 5px lightblue;",
             backgroundColor: "whitesmoke",
-            border: 1,
-            m: { xs: 15, sm: 25, md: 45, lg: 45, xl: 55 },
-            height: { xs: 15, sm: 25, md: 400, lg: 45, xl: 55 },
-            width: { xs: 15, sm: 25, md: 350, lg: 45, xl: 55 },
           }}
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -166,16 +169,19 @@ export default function AddExpenseModal({ onStatusChange, userId }) {
             />
           </div>
           <Button
-            color="primary"
-            onClick={() => {
-              handleExpense();
-
-              setOpen(false);
+            onClick={handleExpense}
+            sx={{
+              borderRadius: 5,
+              bgcolor: "primary.main",
+              color: "white",
+              "&:hover": {
+                bgcolor: "primary.dark",
+              },
             }}
           >
-            Create
+            <span>Create</span>
           </Button>
-        </Box>
+        </Container>
       </Modal>
     </>
   );

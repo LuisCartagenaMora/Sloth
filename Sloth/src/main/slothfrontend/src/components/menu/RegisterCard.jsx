@@ -36,26 +36,17 @@ export default function RegisterCard() {
     <>
       <Container
         sx={{
-          display: "grid",
-          mt: 30,
-          alignContent: "center",
-          justifyItems: "start",
-          width: 1 / 4,
-          padding: [0, 3],
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          mt: { xs: 10, sm: 20, md: 30 }, // Adjust top margin for different screen sizes
+          width: { xs: "60%", sm: "40%", md: "30%", lg: "20%", xlg: "5%" }, // Responsive width
+          p: 2,
           border: "1px solid grey",
           borderRadius: 5,
           // boxShadow: "10px 10px 5px lightblue;",
           backgroundColor: "whitesmoke",
         }}
-        // sx={{
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   justifyContent: "center",
-        //   alignItems: "center",
-        //   width: [1 / 8],
-        //   border: "1px solid grey",
-        //   boxShadow: "10px 10px 5px lightblue;",
-        // }}
       >
         <Typography variant="h4" sx={{ pl: 1 }}>
           Registration
@@ -108,31 +99,19 @@ export default function RegisterCard() {
             ></TextField>
           </Typography>
         </Box>
-        <Box
-          id="abcd"
+        <Button
+          onClick={handleClick}
           sx={{
-            display: "flex",
-            justifyContent: "center",
             borderRadius: 5,
-            width: 300,
+            bgcolor: "primary.main",
+            color: "white",
+            "&:hover": {
+              bgcolor: "primary.dark",
+            },
           }}
         >
-          <Button
-            onClick={handleClick}
-            sx={{
-              mt: 1,
-              width: 300,
-              borderRadius: 5,
-              bgcolor: "primary.main",
-              color: "white",
-              "&:hover": {
-                bgcolor: "primary.dark",
-              },
-            }}
-          >
-            <span>Create</span>
-          </Button>
-        </Box>
+          <span>Create</span>
+        </Button>
       </Container>
     </>
   );

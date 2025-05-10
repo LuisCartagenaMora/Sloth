@@ -41,13 +41,12 @@ export default function LoginCard() {
     <>
       <Container
         sx={{
-          display: "grid",
-          mt: 30,
-          // alignContent: "start",
-          // justifyContent: "start",
-
-          width: 1 / 4,
-          padding: [0, 3],
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          mt: { xs: 10, sm: 20, md: 30 }, // Adjust top margin for different screen sizes
+          width: { xs: "60%", sm: "40%", md: "30%", lg: "20%", xlg: "5%" }, // Responsive width
+          p: 2,
           border: "1px solid grey",
           borderRadius: 5,
           // boxShadow: "10px 10px 5px lightblue;",

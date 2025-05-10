@@ -40,9 +40,12 @@ async function fetchUserById(userId) {
 }
 
 export default function UserGreetingCard({ userId }) {
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [budget, setBudget] = useState("");
+  // const [budget, setBudget] = useState("");
+
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const user = handleUserInfouserId(userId);
