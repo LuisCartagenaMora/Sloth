@@ -50,36 +50,23 @@ export default function Expenses() {
   }, 5000);
 
   return (
-    <Box
-    // sx={{
-    //   backgroundImage:
-    //     "url(https://www.transparenttextures.com/patterns/diamond-upholstery.png)",
-    //   backgroundSize: "cover",
-    //   backgroundRepeat: "repeat",
-    //   py: 10,
-    // }}
-    >
+    <Box>
       <Header />
       <UserGreetingCard userId={userId} />
       <ExpenseAlert alertStatus={alertStatus} />
       <ExpenseContext.Provider value={{ expenses, setExpenses }}>
         <Box sx={{ padding: 3 }}>
           <Grid container spacing={1}>
-            {/* ExpenseList */}
             <Grid item xs={12} md={6}>
               <ExpenseList onStatusChange={handleAlertStatus} userId={userId} />
             </Grid>
 
-            {/* ChartsCard */}
             <Grid item xs={12} md={6}>
               <ChartsCard userId={userId} />
             </Grid>
           </Grid>
         </Box>
       </ExpenseContext.Provider>
-
-      {/* <ExpensePieChartPieChart userId={userId} />
-      <ExpenseLineChart userId={userId} /> */}
     </Box>
   );
 }

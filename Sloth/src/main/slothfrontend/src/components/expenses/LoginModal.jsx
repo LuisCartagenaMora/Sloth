@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Modal } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import LoginCard from "../menu/LoginCard";
 
 export default function UserModal() {
@@ -25,7 +25,6 @@ export default function UserModal() {
         aria-labelledby="modal-modal-title"
       >
         <LoginCard />
-        {/* <LoginCard /> */}
       </Modal>
     </>
   );

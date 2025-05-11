@@ -3,18 +3,10 @@ import {
   Box,
   Button,
   Checkbox,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  Select,
   FormGroup,
   FormControlLabel,
-  Grid,
   Typography,
-  MenuItem,
-  Chip,
   Accordion,
-  AccordionActions,
   AccordionDetails,
   AccordionSummary,
   Card,
@@ -47,33 +39,6 @@ export default function ChartsCard({ userId }) {
     Nov: 0,
     Dec: 0,
   });
-
-  // Fetch all expenses when the component mounts or userId changes
-
-  // useEffect(() => {
-  //   const fetchAllExpenses = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `http://localhost:8081/all-expenses/${userId}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       const data = await response.json();
-  //       setExpenses(data);
-  //     } catch (error) {
-  //       console.error("Failed to fetch all expenses:", error);
-  //     }
-  //   };
-
-  //   fetchAllExpenses();
-  // }, [userId]);
 
   useEffect(() => {
     setFilteredExpenses(expenses);
@@ -153,8 +118,6 @@ export default function ChartsCard({ userId }) {
     }
     totalAmountPerCategories.push(sum);
   }
-
-  //
 
   const months = [
     "Jan",
@@ -242,28 +205,6 @@ export default function ChartsCard({ userId }) {
             </Button>
           </Typography>
 
-          {/* <FormControl sx={{ m: 1, p: 1, width: 250 }}>
-        <InputLabel>Category</InputLabel>
-        <Select
-          onChange={(value) => {
-            const result = filterCategory(value.target.value);
-            setExpenses(result);
-          }}
-          // renderValue={(selected) => (
-          //   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-          //     {selected.map((value) => (
-          //       <Chip key={value} label={value} />
-          //     ))}
-          //   </Box>
-          // )}
-        >
-          {categories.map((category) => (
-            <MenuItem key={category} value={category}>
-              {category}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl> */}
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

@@ -1,3 +1,4 @@
+//Uncomment to add budget: counter, button, and modal screen.
 import { Button, Typography, Icon, Modal, Box, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import fetchUserInfoById from "../../js/FetchUserInfo";
@@ -120,41 +121,3 @@ export default function UserGreetingCard({ userId }) {
     </Box>
   );
 }
-
-// export default function App({ userId }) {
-//   // console.log(userId);
-//   // const user = handleUserInfouserId(userId);
-//   // console.log(user);
-//   // setCurrentUser(user);
-//   // Fetch expenses using React Query
-//   const {
-//     data: user = {},
-//     isLoading,
-//     isError,
-//   } = useQuery(["user", userId], async () => {
-//     const response = await fetch(`http://localhost:8081/user/${userId}`, {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     return response.json();
-//   });
-
-//   if (isLoading) return <Typography>Fetching user info...</Typography>;
-//   if (isError)
-//     return <Typography>An error occurred: {isError.message}</Typography>;
-
-//   return (
-//     <div className="user-info">
-//       <Typography className="" variant="h3">
-//         Welcome, {user.first_name + " " + user.last_name}
-//       </Typography>
-//       {/* Change this later on to make use of useState() */}
-//       <Typography variant="h5">Budget: ${user.budget} </Typography>
-//     </div>
-//   );
-// }

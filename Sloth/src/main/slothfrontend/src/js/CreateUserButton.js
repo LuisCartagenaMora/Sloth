@@ -1,5 +1,6 @@
 import * as React from "react";
 import { redirect } from "react-router-dom";
+import fetchUserInfoById from "./FetchUserInfo";
 
 export default async function createUser(
   firstName,

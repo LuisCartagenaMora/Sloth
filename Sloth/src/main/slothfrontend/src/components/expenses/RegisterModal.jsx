@@ -14,9 +14,6 @@ export default function UserModal() {
         color="primary"
         size="large"
         sx={{ mr: 1 }}
-        // variant="contained"
-        // color="primary"
-        // size="large"
         onClick={() => {
           handleOpen();
         }}

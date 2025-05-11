@@ -10,8 +10,6 @@ import {
   Button,
   IconButton,
   Tooltip,
-  Pagination,
-  Icon,
 } from "@mui/material";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -21,7 +19,6 @@ import deleteButton from "../../js/DeleteExpenseButton";
 import ExpenseContext from "./ExpenseContext";
 
 export default function ExpenseList({ onStatusChange, userId }) {
-  // const [expenses, setExpenses] = useState([]);
   const { expenses, setExpenses } = useContext(ExpenseContext);
   const [numberOfPages, setNumberOfPages] = useState("");
   const [pagination, setPagination] = useState({
