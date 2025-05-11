@@ -1,3 +1,7 @@
 .user-info {
   margin-left: 50px;
 }
+
+.mdc-top-app-bar {
+  background-color: rgb(25, 118, 210);
+}

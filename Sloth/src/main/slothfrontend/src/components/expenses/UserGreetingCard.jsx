@@ -55,11 +55,11 @@ export default function UserGreetingCard({ userId }) {
     });
   }, [userId]);
   return (
-    <div className="user-info">
+    <Box>
       {/* Prevents "Welcome, undefined undefined" from being displayed before the names are loaded. */}
       {currentUser.first_name && currentUser.last_name !== undefined && (
         <>
-          <Typography className="" variant="h3">
+          <Typography variant="h3" sx={{ pl: 3 }}>
             Welcome, {currentUser.first_name + " " + currentUser.last_name}
           </Typography>
         </>
@@ -117,7 +117,7 @@ export default function UserGreetingCard({ userId }) {
           </Button>
         </Box>
       </Modal> */}
-    </div>
+    </Box>
   );
 }
 
