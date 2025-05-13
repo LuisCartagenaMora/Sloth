@@ -1,0 +1,48 @@
+Sequence of Token Authentication Process:
+
+1) The user attempts to register by filling out the Register Form. (1)
+2) When the request is submitted, the user's credentials are stored
+in the postressql db. in order...(5a)(4a)
+3) When the user logs in they create a Login request. (2)
+4) If the user is successfully authenticated a token is created.
+This token expires after 24 hours. in order... (5b)(4b)(6)(3)
+5) Once the user is authenticated they are able to access their
+expenses.
+
+--------------------------------------------------------------------
+1) RegisterResponse.java- A Register Request is created by the user 
+			  (firstname, lastname, username, and 
+                          password).
+
+2) AuthenticationRequest.java- An Authentication(Login) Request is 
+			       created by the user (username and 
+			       password).
+
+3) AuthenticationResponse.java- If the user is successfully 
+			         authenticated they are provided a 
+				 token which expires after 24 hours.
+
+4) AuthenticationService.java- Provides two functions:
+  4a) register(request)- accepts the users register request 
+     			and saves it to the repository(postgressql). 
+			Afterwards, the users token is created.
+  4b) authenticate()
+
+5) AuthenticationController.java- Provides two endpoints:
+  5a) @PostMapping("/register")- Extracts the request body(the 
+     				information in the Register Form) 
+				and passes it as the 
+     				parameter for the register function.
+
+  5b) @PostMapping("/authenticate")- Extracts the request body(the 
+     				    information in the Login Form) 
+				    and passes it as the parameter
+     				    for the authenticate function.
+
+6) JwtService.java- Provides helper functions(e.j. generateToken(), 
+                 isTokenValid(), etc.) for generating the token
+                 and verfying if the generated token has expired.
+
+7) CustomUserDetailsService.java- Provides a single helper function
+                               which fetches the user via their 
+			       username.
